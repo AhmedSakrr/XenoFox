@@ -7,7 +7,7 @@ class CHook
 {
 public:
 
-	bool SetHook(struct tAttached process, const char *func, const char *dll);
+	bool set_hook(struct tAttached process, const char *func, const char *dll);
 
 };
 

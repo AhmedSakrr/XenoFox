@@ -15,3 +15,6 @@
 #include "ntapi.h"
 #include "log.h"
 #include "disasm.h"
+
+// Throws an exception if the condition is not met
+extern void assert(bool condition, const char *exception);

@@ -1,6 +1,6 @@
 #include "hook.h"
 
-bool CHook::SetHook(tAttached process, const char * func, const char * dll)
+bool CHook::set_hook(tAttached process, const char * func, const char * dll)
 {
 	// Resolve export address of target function
 	void * address = (void*)GetProcAddress(GetModuleHandleA(dll), func);
@@ -13,4 +13,7 @@ bool CHook::SetHook(tAttached process, const char * func, const char * dll)
 
 	BYTE jmp[5] = { 0xE9, 0x00, 0x00, 0x00, 0x00 };
 
+	struct tDisasm * p_disasm = disasm.disassemble((BYTE*)address, 5);
+
+	return false;
 }

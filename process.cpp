@@ -166,3 +166,8 @@ void CProcess::release()
 	this->attached_processes.clear();
 }
 
+std::vector<tAttached> CProcess::get_attached_processes() const
+{
+	return this->attached_processes;
+}
+

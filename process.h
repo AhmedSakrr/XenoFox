@@ -39,6 +39,9 @@ public:
 	// Free all process handles
 	void release();
 
+	// Get all attached processes
+	std::vector<tAttached> get_attached_processes() const;
+
 private:
 
 	// List of all attached processes

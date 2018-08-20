@@ -5,13 +5,20 @@
 // Capstone Dissasembler Engine
 #include "capstone/include/capstone.h"
 
+typedef struct tDisasm
+{
+	BYTE * data;
+	size_t size;
+};
+
 class CDisasm
 {
 public:
 	CDisasm();
 	~CDisasm();
 
-	bool disassemble(BYTE *bytes, size_t size);
+	tDisasm *disassemble(BYTE *bytes, size_t size);
+	void disasm_free(void *ptr);
 
 private:
 	csh m_handle;
