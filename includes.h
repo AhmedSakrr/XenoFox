@@ -14,6 +14,7 @@
 #include "system.h"
 #include "log.h"
 #include "disasm.h"
+#include "exceptions.h"
 
 // Throws an exception if the condition is not met
 extern void assert(bool condition, const char *exception);
