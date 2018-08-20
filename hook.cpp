@@ -12,7 +12,7 @@ void CHook::init_space(int numberOfFunctionsToHook)
 	this->m_Position = 0;
 }
 
-bool CHook::set_hook(tAttached process, void *dest, const char * func, const char * dll)
+bool CHook::set_hook(tAttached process, void *proxy, const char * func, const char * dll)
 {
 	assert(this->m_ptrSpace != nullptr, "set_hook: init_space is null");
 
@@ -44,13 +44,13 @@ bool CHook::set_hook(tAttached process, void *dest, const char * func, const cha
 	// Build jmp instruction to jmp back to the original function
 	// Important: calculate the target jmp location by skipping the first 5 bytes (trampoline!)
 	// dest - src
-	*(DWORD*)(jmpBack + 1) = ((DWORD)address + p_disasm->size + 5) - ((DWORD)this->m_ptrSpace);
+	*(DWORD*)(jmpBack + 1) = ((DWORD)address) - ((DWORD)this->m_ptrSpace + this->m_Position);
 	
 	// Copy jmp instruction into our buffer
 	copymem(this->m_ptrSpace, (LPCVOID)jmpBack, sizeof(jmpBack));
 
 	// Build jmp instruction to jmp on our hooked function
-	*(DWORD*)(jmp + 1) = (DWORD)dest - (DWORD)address;
+	*(DWORD*)(jmp + 1) = (DWORD)proxy - (DWORD)address;
 
 	// Patch stub
 	memcpy(address, (LPCVOID)jmp, sizeof(jmp));
@@ -78,6 +78,25 @@ size_t CHook::get_stub_size(BYTE * buffer) const
 
 void CHook::copymem(void * dest, const void * src, size_t size)
 {
+	is_writeable(dest, size);
+
 	memcpy((void*)((DWORD)dest + this->m_Position), src, size);
 	this->m_Position += size;
+}
+
+bool CHook::is_writeable(void * addr, size_t size)
+{
+	MEMORY_BASIC_INFORMATION MBI = { 0 };
+
+	if (VirtualQuery(addr, &MBI, size))
+	{
+		if ((MBI.Protect & PAGE_READWRITE))
+		{
+			return true;
+		}
+	}
+
+	printf("LastErr: %d\n", GetLastError());
+
+	return false;
 }
