@@ -34,6 +34,7 @@ tDisasm *CDisasm::disassemble(BYTE * bytes, size_t size)
 
 		// allocate block to insert instructions which have a length 5 bytes or greater
 		p_disasm->data = (BYTE*)malloc(p_disasm->size);
+		RtlSecureZeroMemory(p_disasm->data, p_disasm->size);
 
 		// fill 5 bytes
 		int dataIndex = 0;

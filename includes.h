@@ -12,9 +12,10 @@
 #include "hook.h"
 #include "process.h"
 #include "system.h"
-#include "ntapi.h"
 #include "log.h"
 #include "disasm.h"
 
 // Throws an exception if the condition is not met
 extern void assert(bool condition, const char *exception);
+
+#include "ntapi.h"
