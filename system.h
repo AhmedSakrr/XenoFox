@@ -11,7 +11,7 @@ enum eArchitecture
 class CSystem
 {
 public:
-	eArchitecture GetArchitecture();
+	eArchitecture get_architecture();
 };
 
 extern CSystem os;
