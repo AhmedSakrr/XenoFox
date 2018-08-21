@@ -1,6 +1,6 @@
 #include "system.h"
 
-eArchitecture CSystem::GetArchitecture()
+eArchitecture CSystem::get_architecture()
 {
 	BOOL fIs64 = FALSE;
 	
