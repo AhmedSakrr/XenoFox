@@ -12,7 +12,7 @@ std::vector<PROCESSENTRY32W> CProcess::walk_processes()
 	PROCESSENTRY32W PE32W = { 0 };
 	PE32W.dwSize = sizeof(PROCESSENTRY32W);
 
-	bool ignoreCheck = os.GetArchitecture() == OS_X86;
+	bool ignoreCheck = os.get_architecture() == OS_X86;
 
 	if (hSnap != INVALID_HANDLE_VALUE)
 	{
